@@ -31,10 +31,10 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io/SarathKrishnamurthy/httpstatus
+          registry: ghcr.io/sarathkrishnamurthy/httpstatus
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: docker buildx build
         run: |
-          docker buildx build --push --platform linux/arm64 -t ghcr.io/SarathKrishnamurthy/httpstatus:test -f src/Teapot.Web/Dockerfile . 
+          docker buildx build --push --platform linux/arm64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test -f src/Teapot.Web/Dockerfile . 
