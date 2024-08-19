@@ -16,8 +16,6 @@ jobs:
   build-images:
     runs-on: ubuntu-latest
     name: Build Docker images for Azure Container Registry and GitHub Container Registry
-    environment:
-      name: build
     permissions:
       contents: read
       packages: write
@@ -37,12 +35,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: src/Teapot.Web/Dockerfile
-          push: true
-          tags: test
-          labels: fortest
-          platforms: linux/amd64,linux/arm64
+      - name: docker buildx build
+        run: |
+          docker buildx build --push --platform linux/amd64,linux/arm64 -t test -f src/Teapot.Web/Dockerfile . 
