@@ -25,6 +25,9 @@ jobs:
         with:
             fetch-depth: 0
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -37,4 +40,4 @@ jobs:
 
       - name: docker buildx build
         run: |
-          docker buildx build --push --platform linux/arm64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test -f src/Teapot.Web/Dockerfile . 
+          docker buildx build --pull --push --platform linux/arm64,linux/amd64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test1 -f src/Teapot.Web/Dockerfile . 
