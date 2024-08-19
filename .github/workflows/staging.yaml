@@ -40,4 +40,4 @@ jobs:
 
       - name: docker buildx build
         run: |
-          docker buildx build --pull --push --platform linux/arm64,linux/amd64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test1 -f src/Teapot.Web/Dockerfile . 
+          docker buildx build --pull --push --platform linux/arm/v8,linux/amd64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test2 -f src/Teapot.Web/Dockerfile . 
