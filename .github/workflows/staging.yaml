@@ -36,8 +36,14 @@ jobs:
         with:
           registry: ghcr.io/sarathkrishnamurthy/httpstatus
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} 
 
-      - name: docker buildx build
-        run: |
-          docker buildx build --pull --push --platform linux/arm64,linux/amd64 -t ghcr.io/sarathkrishnamurthy/httpstatus:test4 -f src/Teapot.Web/Dockerfile . 
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: src/Teapot.Web/Dockerfile
+          push: true
+          tags: ghcr.io/sarathkrishnamurthy/httpstatus:test5
+          labels: test-label
+          platforms: linux/amd64,linux/arm64
