@@ -6,17 +6,18 @@ EXPOSE 80
 EXPOSE 443
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG TARGETARCH
 WORKDIR /src
 COPY ["src/Teapot.Web/Teapot.Web.csproj", "Teapot.Web/"]
 COPY [".git", ".git"]
 RUN dotnet restore "Teapot.Web/Teapot.Web.csproj"
 COPY src/Teapot.Web Teapot.Web
 WORKDIR "/src/Teapot.Web"
-RUN dotnet build "Teapot.Web.csproj" -c Release -o /app/build
+RUN dotnet build "Teapot.Web.csproj" -c Release -o /app/build --arch $TARGETARCH
 
 FROM build AS publish
 ARG TARGETARCH
-RUN dotnet publish "Teapot.Web.csproj" -c Release -o /app/publish -a $TARGETARCH
+RUN dotnet publish "Teapot.Web.csproj" -c Release -o /app/publish --arch $TARGETARCH
 
 FROM base AS final
 WORKDIR /app
